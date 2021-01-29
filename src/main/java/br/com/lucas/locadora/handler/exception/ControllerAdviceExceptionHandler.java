@@ -15,7 +15,7 @@ import feign.FeignException;
 public class ControllerAdviceExceptionHandler {
 
 	@ExceptionHandler(FeignException.class)
-	public ResponseEntity<Erro> handlePedidoNaoEncontradoException(HttpServletRequest request,FeignException e){
+	public ResponseEntity<Erro> handlePedidoNaoEncontradoException(final HttpServletRequest request, final FeignException e){
 		return ResponseEntity.status(NOT_FOUND).body(new Erro(e.getMessage(), request.getServletPath()));
 	}
 }

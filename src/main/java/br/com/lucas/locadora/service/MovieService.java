@@ -10,18 +10,18 @@ import br.com.lucas.locadora.dto.MovieDTO;
 @Service
 public class MovieService {
 
-	private MovieClient movieClient;
+	private final MovieClient movieClient;
 
 	public MovieService(MovieClient movieClient) {
 		this.movieClient = movieClient;
 	}
 
-	public List<MovieDTO> getMoviesFromAPI(int page) {
+	public List<MovieDTO> getMoviesFromAPI(final int page) {
 		return movieClient.getMovies(page).getResults();
 	}
 
-	public void getDetailsByIdFromApi(int id) {
-		MovieDTO movieDetails = movieClient.getMovieDetails(id);
+	public MovieDTO getDetailsByIdFromApi(final int id) {
+		return movieClient.getMovieDetails(id);
 	}		
 
 }

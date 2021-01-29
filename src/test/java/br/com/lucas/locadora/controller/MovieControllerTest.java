@@ -22,10 +22,9 @@ class MovieControllerTest {
 	private MockMvc mockMvc;
 	private URI uri;
 
+	@Test
 	void deveRetornar200SeExistirFilme() throws Exception {
-
 		uri = new URI("/movies");
-
 		mockMvc
 			.perform(MockMvcRequestBuilders.get(uri)
 											.queryParam("page", "1")
@@ -33,9 +32,9 @@ class MovieControllerTest {
 				.andExpect(MockMvcResultMatchers.status().is(OK.value()));
 	}
 	
+	@Test
 	void deveRetornar200SeExistirFilmeComId() throws Exception {
 		uri = new URI("/movies/464052");
-
 		mockMvc
 			.perform(MockMvcRequestBuilders.get(uri)
 											.contentType(APPLICATION_JSON))
@@ -45,7 +44,6 @@ class MovieControllerTest {
 	@Test
 	void deveRetornar401SeNaoExistirFilmeComId() throws Exception {
 		uri = new URI("/movies/0");
-		
 		mockMvc
 			.perform(MockMvcRequestBuilders.get(uri)
 											.contentType(APPLICATION_JSON))

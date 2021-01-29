@@ -1,5 +1,7 @@
 package br.com.lucas.locadora.controller;
 
+import static java.lang.System.currentTimeMillis;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,25 +21,25 @@ import br.com.lucas.locadora.service.MovieService;
 public class MovieController {
 	private static final Logger LOG = LoggerFactory.getLogger(MovieController.class);
 	
-	private MovieService movieService;
+	private final MovieService movieService;
 	
 	public MovieController(MovieService movieService) {
 		this.movieService = movieService;
 	}
 
 	@GetMapping
-	public ResponseEntity<List<MovieDTO>> getMovies(@RequestParam(required = true) int page) {
-		LOG.info("Inicio getMoviesAPI " + System.currentTimeMillis());
+	public ResponseEntity<List<MovieDTO>> getMovies(@RequestParam(required = true) final int page) {
+		LOG.info("Inicio getMoviesAPI " + currentTimeMillis());
 
-		List<MovieDTO> moviesFromAPI = movieService.getMoviesFromAPI(page);
+		var moviesFromAPI = movieService.getMoviesFromAPI(page);
 		
-		LOG.info("Fim getMoviesAPI " + System.currentTimeMillis());
+		LOG.info("Fim getMoviesAPI " + currentTimeMillis());
 		
 		return ResponseEntity.ok(moviesFromAPI);
 	}
 	
 	@GetMapping("/{id}")
-	public void getDetailsByIdFromApi(@PathVariable(required = true) int id) {
-		movieService.getDetailsByIdFromApi(id);
+	public ResponseEntity<MovieDTO> getDetailsByIdFromApi(@PathVariable(required = true) final int id) {
+		return ResponseEntity.ok(movieService.getDetailsByIdFromApi(id));
 	}
 }
