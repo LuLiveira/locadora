@@ -2,9 +2,14 @@ package br.com.lucas.locadora.dto;
 
 import static java.util.stream.Collectors.toList;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import br.com.lucas.locadora.dto.enums.TipoFilmeEnum;
 
 public class MovieDTO {
 
@@ -15,6 +20,9 @@ public class MovieDTO {
 	private String originalTitle;
 	private String overview;
 	private String posterPath;
+	private LocalDate dataLancamento;
+	private BigDecimal valorAluguel;
+	private TipoFilmeEnum tipoFilme;
 
 	public Long getId() {
 		return id;
@@ -44,7 +52,33 @@ public class MovieDTO {
 
 	@JsonProperty(value = "genre_ids")
 	public List<GenreDTO> getGenreIds() {
-		return this.genreIds.stream().map(id -> new GenreDTO(id)).collect(toList());
+		if(this.genreIds != null && !this.genreIds.isEmpty())
+			this.genreIds.stream().map(id -> new GenreDTO(Long.valueOf(id))).collect(toList());
+		return Collections.emptyList();
 	}
 
+	@JsonProperty(value = "release_date")
+	public LocalDate getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(LocalDate dataLancamento) {
+		this.dataLancamento = dataLancamento;
+	}
+
+	public BigDecimal getValorAluguel() {
+		return valorAluguel;
+	}
+
+	public void setValorAluguel(BigDecimal valorAluguel) {
+		this.valorAluguel = valorAluguel;
+	}
+
+	public TipoFilmeEnum getTipoFilme() {
+		return tipoFilme;
+	}
+
+	public void setTipoFilme(TipoFilmeEnum tipoFilme) {
+		this.tipoFilme = tipoFilme;
+	}
 }

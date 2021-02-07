@@ -21,14 +21,17 @@ import br.com.lucas.locadora.service.MovieService;
 public class MovieController {
 	private static final Logger LOG = LoggerFactory.getLogger(MovieController.class);
 	
-	private final MovieService movieService;
+	private MovieService movieService;
 	
-	public MovieController(MovieService movieService) {
+	public MovieController(MovieService movieService) throws InterruptedException {
 		this.movieService = movieService;
+		LOG.info(" Instanciando o objeto MovieController ");
 	}
 
 	@GetMapping
 	public ResponseEntity<List<MovieDTO>> getMovies(@RequestParam(required = true) final int page) {
+		LOG.info(this.toString());
+
 		LOG.info("Inicio getMoviesAPI " + currentTimeMillis());
 
 		var moviesFromAPI = movieService.getMoviesFromAPI(page);
